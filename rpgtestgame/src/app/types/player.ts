@@ -3,4 +3,5 @@ export type Character = {
   hp: number;
   maxHp: number;
   attack: number;
+  image: string;
 };

@@ -1,13 +1,13 @@
 "use client";
 import useGameLogic from "../game/useGameLogic";
-import BattleUI from "./BattleUI";
+import PlayerBattleUI from "./PlayerBattleUI";
 
 export default function GameDisplay() {
   const { player } = useGameLogic();
 
   return (
     <div className="h-1/2 flex">
-      <BattleUI player={player} />
+      <PlayerBattleUI player={player} />
       {/* <BattleUI player={player} /> */}
     </div>
   );
