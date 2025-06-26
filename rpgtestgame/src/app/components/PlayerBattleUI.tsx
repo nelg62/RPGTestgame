@@ -10,8 +10,10 @@ export default function PlayerBattleUI({ player }: Props) {
   return (
     <>
       <div className="border w-1/4 h-full">
+        {/* Player name */}
         <h1 className="text-center p-3">{player.name}</h1>
         <div className="justify-center items-center flex">
+          {/* Player image */}
           <Image
             src={player.image}
             alt="Hero image"
@@ -20,6 +22,7 @@ export default function PlayerBattleUI({ player }: Props) {
             priority
           />
         </div>
+        {/* player health bar  */}
         <ProgressBar
           label="Player HP"
           current={player.hp}

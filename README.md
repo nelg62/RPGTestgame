@@ -1,2 +1,12 @@
 # RPGTestgame
-Creating a basic rpg and seeing were it goes 
+
+Creating a basic rpg and seeing were it goes
+
+things to create
+
+display screen
+map
+player character with stats
+monster charscter with stats
+navigation
+log

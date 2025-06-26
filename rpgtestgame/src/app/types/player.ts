@@ -1,3 +1,4 @@
+// type for player and monster
 export type Character = {
   name: string;
   hp: number;

@@ -10,8 +10,10 @@ export default function EnemyBattleUI({ enemy }: Props) {
   return (
     <>
       <div className="border w-1/4 h-full">
+        {/* Enemy Name */}
         <h1 className="text-center p-3">{enemy.name}</h1>
         <div className="justify-center items-center flex">
+          {/* Enemy image */}
           <Image
             src={enemy.image}
             alt="Enemy image"
@@ -20,6 +22,7 @@ export default function EnemyBattleUI({ enemy }: Props) {
             priority
           />
         </div>
+        {/* Enemy Health bar */}
         <ProgressBar
           label="Enemy HP"
           current={enemy.hp}
