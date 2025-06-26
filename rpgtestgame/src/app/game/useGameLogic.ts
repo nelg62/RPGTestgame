@@ -45,9 +45,9 @@ export default function useGameLogic() {
 
     if (updatedTarget.hp > 0) {
       setTurn("monster");
-      // setTimeout(() => {
-      //   handleMonsterTurn(updatedTarget);
-      // }, 1000);
+      setTimeout(() => {
+        handleMonsterTurn(updatedTarget);
+      }, 1000);
     } else {
       addLog(`✅ ${currentEnemy.name} was defeated!`);
       // setRoomLocked(false);
@@ -73,6 +73,16 @@ export default function useGameLogic() {
         //   return updatedMap;
         // });
       }
+    }
+  };
+
+  const handleMonsterTurn = (enemy: Character) => {
+    const { updatedTarget, message } = attack(enemy, player);
+    setPlayer(updatedTarget);
+    addLog(message);
+
+    if (updatedTarget.hp > 0) {
+      setTurn("player");
     }
   };
 
