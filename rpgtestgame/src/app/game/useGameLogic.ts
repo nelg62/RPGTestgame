@@ -50,28 +50,12 @@ export default function useGameLogic() {
       }, 1000);
     } else {
       addLog(`✅ ${currentEnemy.name} was defeated!`);
-      // setRoomLocked(false);
-
-      // Check for boss win
-      // if (map[currentRoomIndex].type === "boss") {
-      //   addLog("👑 You defeated the boss and won the game!");
-      //   return;
-      // }
 
       if (currentEnemyIndex + 1 < enemies.length) {
         setCurrentEnemyIndex((i) => i + 1);
         setTurn("player");
       } else {
         addLog("🎉 You defeated all the enemies!");
-        // setMap((prevMap) => {
-        //   const updatedMap = [...prevMap];
-        //   updatedMap[currentRoomIndex] = {
-        //     ...updatedMap[currentRoomIndex],
-        //     type: "empty",
-        //     enemy: undefined,
-        //   };
-        //   return updatedMap;
-        // });
       }
     }
   };
@@ -86,5 +70,5 @@ export default function useGameLogic() {
     }
   };
 
-  return { player, currentEnemy, handlePlayerAttack };
+  return { player, currentEnemy, handlePlayerAttack, log };
 }
