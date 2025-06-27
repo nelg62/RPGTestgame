@@ -23,9 +23,27 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 
 // create enemies
 const enemyPool: Character[] = [
-  { name: "Bat", hp: 25, maxHp: 25, attack: 4, image: "/user.png" },
-  { name: "Zombie", hp: 35, maxHp: 35, attack: 6, image: "/user.png" },
-  { name: "Skeleton", hp: 40, maxHp: 40, attack: 7, image: "/user.png" },
+  {
+    name: "Bat",
+    hp: 25,
+    maxHp: 25,
+    attack: 4,
+    image: "/todd-cravens-IY1sRDxNWN4-unsplash.jpg",
+  },
+  {
+    name: "Zombie",
+    hp: 35,
+    maxHp: 35,
+    attack: 6,
+    image: "/julien-tromeur-6-adg66qleM-unsplash.jpg",
+  },
+  {
+    name: "Skeleton",
+    hp: 40,
+    maxHp: 40,
+    attack: 7,
+    image: "/sabina-music-rich-OJy0JHnoUZQ-unsplash.jpg",
+  },
 ];
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {

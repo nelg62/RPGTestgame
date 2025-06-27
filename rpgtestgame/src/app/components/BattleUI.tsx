@@ -21,8 +21,8 @@ export default function BattleUI() {
             </button>
           </>
         )}
-        <h3 className="mt-4"> Battle Log</h3>
-        <ul className="text-sm text-black max-h-40 overflow-y-auto bg-gray-100 p-2 rounded">
+        <h3 className="mt-4 px-2"> Battle Log</h3>
+        <ul className="m-2 text-sm text-black max-h-40 overflow-y-auto bg-gray-100 p-2 rounded">
           {log.map((entry, index) => (
             <li key={index}>{entry}</li>
           ))}
