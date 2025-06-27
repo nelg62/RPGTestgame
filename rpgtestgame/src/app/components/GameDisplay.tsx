@@ -5,14 +5,15 @@ import EnemyBattleUI from "./EnemyBattleUI";
 import PlayerBattleUI from "./PlayerBattleUI";
 
 export default function GameDisplay() {
-  const { player, currentEnemy, handlePlayerAttack, log } = useGameLogic();
+  const { player, currentEnemy, handlePlayerAttack, log, turn } =
+    useGameLogic();
 
   return (
     <div className="h-1/2 flex">
       {/* Player box */}
       <PlayerBattleUI player={player} />
       {/* Battle logic and buttons */}
-      <BattleUI onAttack={handlePlayerAttack} log={log} />
+      <BattleUI onAttack={handlePlayerAttack} log={log} turn={turn} />
       {/* Enemy Box */}
       <EnemyBattleUI enemy={currentEnemy} />
     </div>

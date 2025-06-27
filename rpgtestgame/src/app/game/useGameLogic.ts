@@ -70,5 +70,5 @@ export default function useGameLogic() {
     }
   };
 
-  return { player, currentEnemy, handlePlayerAttack, log };
+  return { player, currentEnemy, handlePlayerAttack, log, turn };
 }
