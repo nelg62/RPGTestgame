@@ -7,7 +7,7 @@ type Turn = "player" | "monster";
 
 type GameContextType = {
   player: Character;
-  currentEnemy: Character;
+  currentEnemy: Character | null;
   handlePlayerAttack: () => void;
   log: string[];
   turn: Turn;
@@ -18,6 +18,7 @@ type GameContextType = {
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
+// create enemies
 const enemyPool: Character[] = [
   { name: "Bat", hp: 25, maxHp: 25, attack: 4, image: "/user.png" },
   { name: "Zombie", hp: 35, maxHp: 35, attack: 6, image: "/user.png" },
@@ -25,6 +26,7 @@ const enemyPool: Character[] = [
 ];
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
+  //   create the player
   const [player, setPlayer] = useState<Character>({
     name: "Hero",
     hp: 100,
@@ -33,56 +35,93 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     image: "/user.png",
   });
 
-  const [enemies, setEnemies] = useState<Character[]>(enemyPool);
-  const [currentEnemyIndex, setCurrentEnemyIndex] = useState(0);
-  const currentEnemy = enemies[currentEnemyIndex];
+  //   set enemies in to a state
+  const [remainingEnemies, setRemainingEnemies] =
+    useState<Character[]>(enemyPool);
+  //  get random enemy and set as curernt enemy
+  const [currentEnemy, setCurrentEnemy] = useState<Character | null>(
+    getRandomEnemy(enemyPool)
+  );
 
+  //   state to handle if in combat or not
   const [inCombat, setInCombat] = useState(false);
+  //   handle player and monster turns
   const [turn, setTurn] = useState<Turn>("player");
+  //   state for logs
   const [log, setLog] = useState<string[]>([]);
 
+  // get a random ememy
+  function getRandomEnemy(pool: Character[]): Character | null {
+    if (pool.length === 0) return null;
+    const index = Math.floor(Math.random() * pool.length);
+    return pool[index];
+  }
+
+  //  function for creating and setting the logs in state
   const addLog = (message: string) => {
     setLog((prev) => [message, ...prev]);
   };
 
+  //   attack all enemeys in the enemy array
   const handlePlayerAttack = () => {
+    // if no target and not player turn then do nothing
     if (turn !== "player" || !currentEnemy || player.hp <= 0) return;
 
+    // attack the enemy with attack function and return message
     const { updatedTarget, message } = attack(player, currentEnemy);
-    const newEnemies = [...enemies];
-    newEnemies[currentEnemyIndex] = updatedTarget;
-    setEnemies(newEnemies);
+
+    setCurrentEnemy(updatedTarget);
     addLog(message);
 
+    // if monster still has health
     if (updatedTarget.hp > 0) {
+      // set the turn to monster
       setTurn("monster");
+      //   wait a bit and then call handlemonster turn function to attack
       setTimeout(() => {
         handleMonsterTurn(updatedTarget);
       }, 1000);
     } else {
+      // if monster has no health
       addLog(`✅ ${currentEnemy.name} was defeated!`);
 
-      if (currentEnemyIndex + 1 < enemies.length) {
-        setCurrentEnemyIndex((i) => i + 1);
+      const updatedPool = remainingEnemies.filter(
+        (enemy) => enemy.name !== currentEnemy.name
+      );
+      setRemainingEnemies(updatedPool);
+
+      if (updatedPool.length > 0) {
+        const nextEnemy = getRandomEnemy(updatedPool);
+        setCurrentEnemy(nextEnemy);
         setTurn("player");
       } else {
+        // if there are no more enemies all defeated and end combat
         addLog("🎉 You defeated all the enemies!");
+        setCurrentEnemy(null);
         setInCombat(false);
       }
     }
   };
 
+  //   monster attack
   const handleMonsterTurn = (enemy: Character) => {
     const { updatedTarget, message } = attack(enemy, player);
     setPlayer(updatedTarget);
     addLog(message);
 
+    // check if player health is more then 0
     if (updatedTarget.hp > 0) {
       setTurn("player");
+    } else {
+      addLog("You were defeated");
+      setInCombat(false);
     }
   };
 
   const resetGame = () => {
+    const newPool = [...enemyPool];
+    const firstEnemy = getRandomEnemy(newPool);
+
     setPlayer({
       name: "Hero",
       hp: 100,
@@ -90,8 +129,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       attack: 10,
       image: "/user.png",
     });
-    setEnemies(enemyPool);
-    setCurrentEnemyIndex(0);
+    setRemainingEnemies(newPool);
+    setCurrentEnemy(firstEnemy);
     setInCombat(false);
     setTurn("player");
     setLog([]);
