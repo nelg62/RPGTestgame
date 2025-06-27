@@ -15,6 +15,7 @@ type GameContextType = {
   inCombat: boolean;
   setInCombat: (value: boolean) => void;
   resetGame: () => void;
+  setCurrentEnemy: (value: Character | null) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -154,6 +155,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         inCombat,
         setInCombat,
         resetGame,
+        setCurrentEnemy,
       }}
     >
       {children}
