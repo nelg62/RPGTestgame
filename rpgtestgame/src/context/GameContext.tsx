@@ -74,6 +74,11 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     setCurrentEnemy(updatedTarget);
     addLog(message);
 
+    const updatedEnemies = remainingEnemies.map((enemy) =>
+      enemy.name === currentEnemy.name ? updatedTarget : enemy
+    );
+    setRemainingEnemies(updatedEnemies);
+
     // if monster still has health
     if (updatedTarget.hp > 0) {
       // set the turn to monster

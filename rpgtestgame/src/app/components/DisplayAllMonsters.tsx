@@ -3,14 +3,20 @@ import Image from "next/image";
 import ProgressBar from "./ProgressBar";
 
 export default function DisplayAllMonsters() {
-  const { remainingEnemies, inCombat } = useGame();
+  const { remainingEnemies, inCombat, currentEnemy } = useGame();
 
   return (
     <div className="flex h-full w-full">
       {remainingEnemies.map((enemy) => (
-        <div key={enemy.name} className="border w-1/4 h-9/10">
+        <div key={enemy.name} className="w-1/4">
           {inCombat && (
-            <div>
+            <div
+              className={`border h-full ${
+                currentEnemy?.name === enemy?.name
+                  ? "border-red-500 bg-red-100 text-black"
+                  : ""
+              }`}
+            >
               {/* Enemy Name */}
               <h1 className="text-center p-3">{enemy?.name}</h1>
               {enemy && (
