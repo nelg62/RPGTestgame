@@ -16,6 +16,7 @@ type GameContextType = {
   setInCombat: (value: boolean) => void;
   resetGame: () => void;
   setCurrentEnemy: (value: Character | null) => void;
+  attackingEnemy: Character | null;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -44,6 +45,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [currentEnemy, setCurrentEnemy] = useState<Character | null>(
     getRandomEnemy(enemyPool)
   );
+
+  const [attackingEnemy, setAttackingEnemy] = useState<Character | null>(null);
 
   //   state to handle if in combat or not
   const [inCombat, setInCombat] = useState(false);
@@ -86,7 +89,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       setTurn("monster");
       //   wait a bit and then call handlemonster turn function to attack
       setTimeout(() => {
-        handleMonsterTurn(updatedTarget);
+        handleMonsterTurn();
       }, 1000);
     } else {
       // if monster has no health
@@ -111,16 +114,42 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   };
 
   //   monster attack
-  const handleMonsterTurn = (enemy: Character) => {
-    const { updatedTarget, message } = attack(enemy, player);
+  //   const handleMonsterTurn = (enemy: Character) => {
+  //     const { updatedTarget, message } = attack(enemy, player);
+  //     setPlayer(updatedTarget);
+  //     addLog(message);
+
+  //     // check if player health is more then 0
+  //     if (updatedTarget.hp > 0) {
+  //       setTurn("player");
+  //     } else {
+  //       addLog("You were defeated");
+  //       setInCombat(false);
+  //     }
+  //   };
+
+  // random monster attacks
+  const handleMonsterTurn = () => {
+    if (remainingEnemies.length === 0) return;
+
+    const randomEnemy = getRandomEnemy(remainingEnemies);
+    if (!randomEnemy) return;
+
+    setAttackingEnemy(randomEnemy);
+
+    const { updatedTarget, message } = attack(randomEnemy, player);
     setPlayer(updatedTarget);
-    addLog(message);
+    addLog(`${randomEnemy.name} attacks! ` + message);
 
     // check if player health is more then 0
     if (updatedTarget.hp > 0) {
-      setTurn("player");
+      setTimeout(() => {
+        setAttackingEnemy(null);
+        setTurn("player");
+      }, 500);
     } else {
       addLog("You were defeated");
+      setAttackingEnemy(null);
       setInCombat(false);
     }
   };
@@ -156,6 +185,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         setInCombat,
         resetGame,
         setCurrentEnemy,
+        attackingEnemy,
       }}
     >
       {children}
