@@ -6,6 +6,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 type Turn = "player" | "monster";
 
 type GameContextType = {
+  remainingEnemies: Character[];
   player: Character;
   currentEnemy: Character | null;
   handlePlayerAttack: () => void;
@@ -139,6 +140,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   return (
     <GameContext.Provider
       value={{
+        remainingEnemies,
         player,
         currentEnemy,
         handlePlayerAttack,
