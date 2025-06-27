@@ -1,8 +1,8 @@
-interface Props {
-  turn: string;
-}
+import { useGame } from "@/context/GameContext";
 
-export default function TurnIndicator({ turn }: Props) {
+export default function TurnIndicator() {
+  const { turn } = useGame();
+
   return (
     <div className="my-4 text-center">
       <h2

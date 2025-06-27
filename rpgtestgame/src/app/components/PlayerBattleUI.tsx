@@ -1,12 +1,10 @@
 import Image from "next/image";
-import { Character } from "../types/player";
 import ProgressBar from "./ProgressBar";
+import { useGame } from "@/context/GameContext";
 
-interface Props {
-  player: Character;
-}
+export default function PlayerBattleUI() {
+  const { player } = useGame();
 
-export default function PlayerBattleUI({ player }: Props) {
   return (
     <>
       <div className="border w-1/4 h-full">

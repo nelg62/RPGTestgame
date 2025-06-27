@@ -10,3 +10,5 @@ player character with stats
 monster charscter with stats
 navigation
 log
+
+basic home screen and choice to choose a random ememy to battle or to choose to enter a dungeon

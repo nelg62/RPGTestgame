@@ -1,21 +1,17 @@
 "use client";
-import useGameLogic from "../game/useGameLogic";
 import BattleUI from "./BattleUI";
 import EnemyBattleUI from "./EnemyBattleUI";
 import PlayerBattleUI from "./PlayerBattleUI";
 
 export default function GameDisplay() {
-  const { player, currentEnemy, handlePlayerAttack, log, turn } =
-    useGameLogic();
-
   return (
     <div className="h-1/2 flex">
       {/* Player box */}
-      <PlayerBattleUI player={player} />
+      <PlayerBattleUI />
       {/* Battle logic and buttons */}
-      <BattleUI onAttack={handlePlayerAttack} log={log} turn={turn} />
+      <BattleUI />
       {/* Enemy Box */}
-      <EnemyBattleUI enemy={currentEnemy} />
+      <EnemyBattleUI />
     </div>
   );
 }

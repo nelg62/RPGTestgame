@@ -1,19 +1,16 @@
+import { useGame } from "@/context/GameContext";
 import TurnIndicator from "./TurnIndicator";
 
-interface Props {
-  onAttack: () => void;
-  log: string[];
-  turn: string;
-}
+export default function BattleUI() {
+  const { turn, handlePlayerAttack, log } = useGame();
 
-export default function BattleUI({ onAttack, log, turn }: Props) {
   return (
     <>
       <div className="border w-1/2">
         <TurnIndicator turn={turn} />
         {/* Attack Button */}
         <button
-          onClick={onAttack}
+          onClick={handlePlayerAttack}
           className="m-2 p-2 bg-blue-500 text-white rounded"
           disabled={turn !== "player"}
         >
