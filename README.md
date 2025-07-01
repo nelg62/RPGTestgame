@@ -12,3 +12,5 @@ navigation
 log
 
 basic home screen and choice to choose a random ememy to battle or to choose to enter a dungeon
+
+attack annimations for each enemy

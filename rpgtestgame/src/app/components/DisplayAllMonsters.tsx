@@ -33,7 +33,7 @@ export default function DisplayAllMonsters() {
               <h1 className="text-center p-3">{enemy?.name}</h1>
               {enemy && (
                 <>
-                  <div className="justify-center items-center flex">
+                  <div className="justify-center items-center flex ">
                     {/* Enemy image */}
 
                     <Image

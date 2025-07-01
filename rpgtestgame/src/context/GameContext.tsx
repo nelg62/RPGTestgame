@@ -1,6 +1,8 @@
 "use client";
 import { Character } from "@/app/types/player";
+import { Room } from "@/app/types/room";
 import { attack } from "@/app/utils/battle";
+import { generateMaze } from "@/app/utils/generateMap";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 type Turn = "player" | "monster";
@@ -17,6 +19,9 @@ type GameContextType = {
   resetGame: () => void;
   setCurrentEnemy: (value: Character | null) => void;
   attackingEnemy: Character | null;
+  exploringDungeon: boolean;
+  enterDungeon: () => void;
+  map: Room[];
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -72,6 +77,10 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [turn, setTurn] = useState<Turn>("player");
   //   state for logs
   const [log, setLog] = useState<string[]>([]);
+
+  const [exploringDungeon, setExploringDungeon] = useState(false);
+
+  const [map, setMap] = useState<Room[]>([]);
 
   // get a random ememy
   function getRandomEnemy(pool: Character[]): Character | null {
@@ -172,6 +181,11 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const enterDungeon = () => {
+    setExploringDungeon(true);
+    setMap(generateMaze());
+  };
+
   const resetGame = () => {
     const newPool = [...enemyPool];
     const firstEnemy = getRandomEnemy(newPool);
@@ -204,6 +218,9 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         resetGame,
         setCurrentEnemy,
         attackingEnemy,
+        exploringDungeon,
+        enterDungeon,
+        map,
       }}
     >
       {children}
