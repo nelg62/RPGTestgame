@@ -53,6 +53,7 @@ export const generateMaze = (): Room[] => {
       room.type = "empty";
     }
   }
+  console.log("rooms", rooms);
 
   return rooms;
 };

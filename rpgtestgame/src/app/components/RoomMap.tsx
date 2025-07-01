@@ -2,7 +2,8 @@ import { useGame } from "@/context/GameContext";
 import { MAP_WIDTH } from "../utils/generateMap";
 
 export default function RoomMap() {
-  const { map, currentRoomIndex, enterRoom } = useGame();
+  const { map, currentRoomIndex, enterRoom, roomLocked, player, turn } =
+    useGame();
   return (
     <div className="w-1/4 content-center">
       <h2 className="text-center">Room {currentRoomIndex + 1}</h2>
@@ -32,8 +33,23 @@ export default function RoomMap() {
         }}
       >
         {map.map((room, i) => {
+          const isCurrent = i === currentRoomIndex;
+
           return (
-            <button key={room.id} onClick={() => enterRoom(i)}>
+            <button
+              key={room.id}
+              disabled={
+                isCurrent || player.hp <= 0 || turn !== "player" || roomLocked
+              }
+              onClick={() => enterRoom(i)}
+              className={`p-2 border text-xs ${
+                isCurrent
+                  ? "bg-yellow-300 text-black"
+                  : room.visited
+                  ? "bg-green-200 text-black"
+                  : "bg-gray-300 text-black"
+              }`}
+            >
               {room.type === "start" ? "🚪" : ""}
               {room.type === "enemy" && !room.visited ? "👹" : ""}
               {room.type === "treasure" ? "💰" : ""}

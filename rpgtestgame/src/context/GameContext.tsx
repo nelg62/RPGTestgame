@@ -24,6 +24,7 @@ type GameContextType = {
   map: Room[];
   currentRoomIndex: number;
   enterRoom: (index: number) => void;
+  roomLocked: boolean;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -84,6 +85,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   const [map, setMap] = useState<Room[]>([]);
   const [currentRoomIndex, setCurrentRoomIndex] = useState(0);
+
+  const [roomLocked, setRoomLocked] = useState(false);
 
   // get a random ememy
   function getRandomEnemy(pool: Character[]): Character | null {
@@ -190,11 +193,51 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const enterRoom = (index: number) => {
+    console.log("map", map);
+
     const newMap = [...map];
     const room = newMap[index];
+    console.log("room", room);
+
     room.visited = true;
     setMap(newMap);
     setCurrentRoomIndex(index);
+
+    if (
+      (room.type === "enemy" && room.enemy) ||
+      (room.type === "boss" && room.enemy)
+    ) {
+      addLog(`⚔️ You encountered a ${room.enemy.name}!`);
+      // setRemainingEnemies([room.enemy]);
+      setAttackingEnemy(remainingEnemies[0]);
+      setTurn("player");
+      setInCombat(true);
+      setRoomLocked(true);
+    } else {
+      setInCombat(false);
+      setRoomLocked(false);
+      if (room.type === "treasure") {
+        addLog("🎁 You found a treasure chest! (+10 HP)");
+        setPlayer((prev) => ({
+          ...prev,
+          hp: Math.min(prev.hp + 10, prev.maxHp),
+        }));
+
+        room.type = "empty";
+      } else if (room.type === "healing") {
+        addLog("💖 You found a healing spring! (+20 HP)");
+        setPlayer((prev) => ({
+          ...prev,
+          hp: Math.min(prev.hp + 20, prev.maxHp),
+        }));
+
+        room.type = "empty";
+      } else {
+        addLog("🌾 The room is empty.");
+      }
+      setInCombat(false);
+      setMap(newMap);
+    }
   };
 
   const resetGame = () => {
@@ -234,6 +277,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         map,
         currentRoomIndex,
         enterRoom,
+        roomLocked,
       }}
     >
       {children}
