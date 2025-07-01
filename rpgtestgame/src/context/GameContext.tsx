@@ -102,12 +102,57 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   //   attack all enemeys in the enemy array
   const handlePlayerAttack = () => {
-    // if no target and not player turn then do nothing
+    if (exploringDungeon) {
+      handleDungeonPlayerAttack();
+    } else {
+      handleArenaPlayerAttack();
+    }
+  };
+
+  const handleDungeonPlayerAttack = () => {
     if (turn !== "player" || !currentEnemy || player.hp <= 0) return;
 
-    // attack the enemy with attack function and return message
     const { updatedTarget, message } = attack(player, currentEnemy);
+    setCurrentEnemy(updatedTarget);
+    addLog(message);
 
+    const isBossRoom = map[currentRoomIndex]?.type === "boss";
+
+    if (updatedTarget.hp > 0) {
+      setTurn("monster");
+      setTimeout(() => {
+        handleMonsterTurn();
+      }, 1000);
+    } else {
+      addLog(`✅ ${currentEnemy.name} was defeated!`);
+
+      setRoomLocked(false);
+      setInCombat(false);
+      setCurrentEnemy(null);
+
+      if (isBossRoom) {
+        addLog("👑 You defeated the boss and won the game!");
+      } else {
+        // Mark room as cleared
+        setMap((prevMap) => {
+          const updatedMap = [...prevMap];
+          updatedMap[currentRoomIndex] = {
+            ...updatedMap[currentRoomIndex],
+            type: "empty",
+            enemy: undefined,
+          };
+          return updatedMap;
+        });
+
+        addLog("🎉 You cleared the room!");
+      }
+    }
+  };
+
+  const handleArenaPlayerAttack = () => {
+    if (turn !== "player" || !currentEnemy || player.hp <= 0) return;
+
+    const { updatedTarget, message } = attack(player, currentEnemy);
     setCurrentEnemy(updatedTarget);
     addLog(message);
 
@@ -116,16 +161,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     );
     setRemainingEnemies(updatedEnemies);
 
-    // if monster still has health
     if (updatedTarget.hp > 0) {
-      // set the turn to monster
       setTurn("monster");
-      //   wait a bit and then call handlemonster turn function to attack
       setTimeout(() => {
         handleMonsterTurn();
       }, 1000);
     } else {
-      // if monster has no health
       addLog(`✅ ${currentEnemy.name} was defeated!`);
 
       const updatedPool = remainingEnemies.filter(
@@ -138,13 +179,62 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         setCurrentEnemy(nextEnemy);
         setTurn("player");
       } else {
-        // if there are no more enemies all defeated and end combat
         addLog("🎉 You defeated all the enemies!");
         setCurrentEnemy(null);
         setInCombat(false);
       }
     }
   };
+
+  // const handlePlayerAttack = () => {
+  //   // if no target and not player turn then do nothing
+  //   if (turn !== "player" || !currentEnemy || player.hp <= 0) return;
+
+  //   // attack the enemy with attack function and return message
+  //   const { updatedTarget, message } = attack(player, currentEnemy);
+
+  //   setCurrentEnemy(updatedTarget);
+  //   addLog(message);
+
+  //   const updatedEnemies = remainingEnemies.map((enemy) =>
+  //     enemy.name === currentEnemy.name ? updatedTarget : enemy
+  //   );
+  //   setRemainingEnemies(updatedEnemies);
+
+  //   // if monster still has health
+  //   if (updatedTarget.hp > 0) {
+  //     // set the turn to monster
+  //     setTurn("monster");
+  //     //   wait a bit and then call handlemonster turn function to attack
+  //     setTimeout(() => {
+  //       handleMonsterTurn();
+  //     }, 1000);
+  //   } else {
+  //     // if monster has no health
+  //     addLog(`✅ ${currentEnemy.name} was defeated!`);
+
+  //     const updatedPool = remainingEnemies.filter(
+  //       (enemy) => enemy.name !== currentEnemy.name
+  //     );
+  //     setRemainingEnemies(updatedPool);
+
+  //     if (exploringDungeon) {
+  //       setInCombat(false);
+  //       setRoomLocked(false);
+  //       setCurrentEnemy(null);
+  //       addLog("🎉 You cleared the room!");
+  //     } else if (updatedPool.length > 0) {
+  //       const nextEnemy = getRandomEnemy(updatedPool);
+  //       setCurrentEnemy(nextEnemy);
+  //       setTurn("player");
+  //     } else {
+  //       // if there are no more enemies all defeated and end combat
+  //       addLog("🎉 You defeated all the enemies!");
+  //       setCurrentEnemy(null);
+  //       setInCombat(false);
+  //     }
+  //   }
+  // };
 
   //   monster attack
   //   const handleMonsterTurn = (enemy: Character) => {
@@ -209,7 +299,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     ) {
       addLog(`⚔️ You encountered a ${room.enemy.name}!`);
       // setRemainingEnemies([room.enemy]);
-      setAttackingEnemy(remainingEnemies[0]);
+      setCurrentEnemy(room.enemy);
       setTurn("player");
       setInCombat(true);
       setRoomLocked(true);
