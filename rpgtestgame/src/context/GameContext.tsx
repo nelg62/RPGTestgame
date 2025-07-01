@@ -253,6 +253,35 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   // random monster attacks
   const handleMonsterTurn = () => {
+    if (exploringDungeon) {
+      handleDungeonMonsterTurn();
+    } else {
+      handleArenaMonsterTurn();
+    }
+  };
+
+  const handleDungeonMonsterTurn = () => {
+    if (!currentEnemy) return;
+
+    setAttackingEnemy(currentEnemy);
+
+    const { updatedTarget, message } = attack(currentEnemy, player);
+    setPlayer(updatedTarget);
+    addLog(`${currentEnemy.name} attacks! ` + message);
+
+    if (updatedTarget.hp > 0) {
+      setTimeout(() => {
+        setAttackingEnemy(null);
+        setTurn("player");
+      }, 500);
+    } else {
+      addLog("💀 You were defeated");
+      setAttackingEnemy(null);
+      setInCombat(false);
+    }
+  };
+
+  const handleArenaMonsterTurn = () => {
     if (remainingEnemies.length === 0) return;
 
     const randomEnemy = getRandomEnemy(remainingEnemies);
@@ -264,18 +293,42 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     setPlayer(updatedTarget);
     addLog(`${randomEnemy.name} attacks! ` + message);
 
-    // check if player health is more then 0
     if (updatedTarget.hp > 0) {
       setTimeout(() => {
         setAttackingEnemy(null);
         setTurn("player");
       }, 500);
     } else {
-      addLog("You were defeated");
+      addLog("💀 You were defeated");
       setAttackingEnemy(null);
       setInCombat(false);
     }
   };
+
+  // const handleMonsterTurn = () => {
+  //   if (remainingEnemies.length === 0) return;
+
+  //   const randomEnemy = getRandomEnemy(remainingEnemies);
+  //   if (!randomEnemy) return;
+
+  //   setAttackingEnemy(randomEnemy);
+
+  //   const { updatedTarget, message } = attack(randomEnemy, player);
+  //   setPlayer(updatedTarget);
+  //   addLog(`${randomEnemy.name} attacks! ` + message);
+
+  //   // check if player health is more then 0
+  //   if (updatedTarget.hp > 0) {
+  //     setTimeout(() => {
+  //       setAttackingEnemy(null);
+  //       setTurn("player");
+  //     }, 500);
+  //   } else {
+  //     addLog("You were defeated");
+  //     setAttackingEnemy(null);
+  //     setInCombat(false);
+  //   }
+  // };
 
   const enterDungeon = () => {
     setExploringDungeon(true);
