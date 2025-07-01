@@ -4,7 +4,7 @@ import { MAP_WIDTH } from "../utils/generateMap";
 export default function RoomMap() {
   const { map, currentRoomIndex, enterRoom } = useGame();
   return (
-    <div className="w-full content-center">
+    <div className="w-1/4 content-center">
       <h2 className="text-center">Room {currentRoomIndex + 1}</h2>
       <p className="text-center">
         Type:{" "}
@@ -34,7 +34,14 @@ export default function RoomMap() {
         {map.map((room, i) => {
           return (
             <button key={room.id} onClick={() => enterRoom(i)}>
-              {room.type} Room {i + 1}
+              {room.type === "start" ? "🚪" : ""}
+              {room.type === "enemy" && !room.visited ? "👹" : ""}
+              {room.type === "treasure" ? "💰" : ""}
+              {room.type === "healing" ? "💖" : ""}
+              {room.type === "empty" ? "🌾" : ""}
+              {room.type === "boss" ? "👑" : ""}
+              <br />
+              Room {i + 1}
             </button>
           );
         })}

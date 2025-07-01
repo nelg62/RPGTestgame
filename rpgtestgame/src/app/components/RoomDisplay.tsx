@@ -1,10 +1,8 @@
 import { useGame } from "@/context/GameContext";
 import DisplayAllMonsters from "./DisplayAllMonsters";
-import RoomMap from "./RoomMap";
 
 export default function RoomDisplay() {
-  const { setInCombat, resetGame, inCombat, exploringDungeon, enterDungeon } =
-    useGame();
+  const { setInCombat, resetGame, inCombat, enterDungeon } = useGame();
 
   return (
     <div className="border h-1/2 flex">
@@ -15,7 +13,7 @@ export default function RoomDisplay() {
         <button onClick={() => enterDungeon()}>Enter Dungeon</button>
       </div>
       {inCombat && <DisplayAllMonsters />}
-      {exploringDungeon && !inCombat && <RoomMap />}
+      {/* {exploringDungeon && !inCombat && <RoomMap />} */}
     </div>
   );
 }

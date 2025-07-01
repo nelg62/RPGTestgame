@@ -18,5 +18,41 @@ export const generateMaze = (): Room[] => {
     },
   }));
 
+  for (const room of rooms) {
+    if (room.type === "start" || room.type === "boss") continue;
+    const rand = Math.random();
+    if (rand < 0.2) room.type = "healing";
+    else if (rand < 0.4) room.type = "treasure";
+    else if (rand < 0.7) {
+      room.type = "enemy";
+      const enemyPool = [
+        {
+          name: "Bat",
+          hp: 25,
+          maxHp: 25,
+          attack: 4,
+          image: "/todd-cravens-IY1sRDxNWN4-unsplash.jpg",
+        },
+        {
+          name: "Zombie",
+          hp: 35,
+          maxHp: 35,
+          attack: 6,
+          image: "/julien-tromeur-6-adg66qleM-unsplash.jpg",
+        },
+        {
+          name: "Skeleton",
+          hp: 40,
+          maxHp: 40,
+          attack: 7,
+          image: "/sabina-music-rich-OJy0JHnoUZQ-unsplash.jpg",
+        },
+      ];
+      room.enemy = enemyPool[Math.floor(Math.random() * enemyPool.length)];
+    } else {
+      room.type = "empty";
+    }
+  }
+
   return rooms;
 };
