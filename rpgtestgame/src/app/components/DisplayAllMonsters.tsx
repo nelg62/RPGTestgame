@@ -43,6 +43,7 @@ export default function DisplayAllMonsters() {
                       height={100}
                       width={100}
                       priority
+                      className="h-auto w-auto"
                     />
                   </div>
 

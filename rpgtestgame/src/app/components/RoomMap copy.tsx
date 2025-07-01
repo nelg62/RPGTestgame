@@ -2,7 +2,7 @@ import { useGame } from "@/context/GameContext";
 import { MAP_WIDTH } from "../utils/generateMap";
 
 export default function RoomMap() {
-  const { map, currentRoomIndex, moveToRoom, roomLocked, player, turn } =
+  const { map, currentRoomIndex, enterRoom, roomLocked, player, turn } =
     useGame();
   return (
     <div className="w-1/4 content-center">
@@ -27,13 +27,12 @@ export default function RoomMap() {
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${MAP_WIDTH}, 1fr)`,
-          // gap: "10px",
+          gap: "10px",
           maxWidth: "300px",
           margin: "auto",
         }}
       >
         {map.map((room, i) => {
-          const { top, right, bottom, left } = room.walls || {};
           const isCurrent = i === currentRoomIndex;
 
           return (
@@ -42,7 +41,7 @@ export default function RoomMap() {
               disabled={
                 isCurrent || player.hp <= 0 || turn !== "player" || roomLocked
               }
-              onClick={() => moveToRoom(i)}
+              onClick={() => enterRoom(i)}
               className={`p-2 border text-xs ${
                 isCurrent
                   ? "bg-yellow-300 text-black"
@@ -50,16 +49,6 @@ export default function RoomMap() {
                   ? "bg-green-200 text-black"
                   : "bg-gray-300 text-black"
               }`}
-              style={{
-                borderTop: top ? "4px solid orange" : "4px solid transparent",
-                borderRight: right
-                  ? "4px solid orange"
-                  : "4px solid transparent",
-                borderBottom: bottom
-                  ? "4px solid orange"
-                  : "4px solid transparent",
-                borderLeft: left ? "4px solid orange" : "4px solid transparent",
-              }}
             >
               {room.type === "start" ? "🚪" : ""}
               {room.type === "enemy" && !room.visited ? "👹" : ""}

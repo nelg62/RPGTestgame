@@ -18,6 +18,95 @@ export const generateMaze = (): Room[] => {
     },
   }));
 
+  const removeWallsBetween = (a: number, b: number) => {
+    const ax = a % MAP_WIDTH;
+    const ay = Math.floor(a / MAP_WIDTH);
+    const bx = b % MAP_WIDTH;
+    const by = Math.floor(b / MAP_WIDTH);
+
+    if (ax === bx) {
+      if (ay < by) {
+        rooms[a].walls!.bottom = false;
+        rooms[b].walls!.top = false;
+      } else {
+        rooms[a].walls!.top = false;
+        rooms[b].walls!.bottom = false;
+      }
+    } else if (ay === by) {
+      if (ax < bx) {
+        rooms[a].walls!.right = false;
+        rooms[b].walls!.left = false;
+      } else {
+        rooms[a].walls!.left = false;
+        rooms[b].walls!.right = false;
+      }
+    }
+  };
+
+  const getNeighbors = (i: number): number[] => {
+    const neighbors: number[] = [];
+    const x = i % MAP_WIDTH;
+    const y = Math.floor(i / MAP_WIDTH);
+
+    const coordsToIndex = (x: number, y: number) => y * MAP_WIDTH + x;
+
+    if (x > 0) neighbors.push(coordsToIndex(x - 1, y));
+    if (x < MAP_WIDTH - 1) neighbors.push(coordsToIndex(x + 1, y));
+    if (y > 0) neighbors.push(coordsToIndex(x, y - 1));
+    if (y < MAP_HEIGHT - 1) neighbors.push(coordsToIndex(x, y + 1));
+
+    return neighbors;
+  };
+
+  const visited = new Set<number>();
+
+  const dfs = (i: number) => {
+    visited.add(i);
+    const neighbors = getNeighbors(i).filter((n) => !visited.has(n));
+    // Randomize order
+    for (const n of neighbors.sort(() => Math.random() - 0.5)) {
+      if (!visited.has(n)) {
+        rooms[i].connections.push(n);
+        rooms[n].connections.push(i); // bidirectional
+        removeWallsBetween(i, n);
+        dfs(n);
+      }
+    }
+  };
+
+  dfs(0);
+
+  rooms[0].type = "start";
+
+  const distances = Array(totalRooms).fill(Infinity);
+  const queue: number[] = [0];
+  distances[0] = 0;
+
+  while (queue.length > 0) {
+    const curr = queue.shift()!;
+    for (const neighbor of rooms[curr].connections) {
+      if (distances[neighbor] === Infinity) {
+        distances[neighbor] = distances[curr] + 1;
+        queue.push(neighbor);
+      }
+    }
+  }
+
+  const farthest = distances.reduce(
+    (farthestIdx, dist, idx) =>
+      dist > distances[farthestIdx] ? idx : farthestIdx,
+    0
+  );
+
+  rooms[farthest].type = "boss";
+  rooms[farthest].enemy = {
+    name: "Dark Lord",
+    hp: 100,
+    maxHp: 100,
+    attack: 12,
+    image: "/user.png",
+  };
+
   for (const room of rooms) {
     if (room.type === "start" || room.type === "boss") continue;
     const rand = Math.random();

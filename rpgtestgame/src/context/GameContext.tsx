@@ -23,7 +23,7 @@ type GameContextType = {
   enterDungeon: () => void;
   map: Room[];
   currentRoomIndex: number;
-  enterRoom: (index: number) => void;
+  moveToRoom: (index: number) => void;
   roomLocked: boolean;
 };
 
@@ -383,6 +383,14 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const moveToRoom = (nextRoomId: number) => {
+    if (!map[currentRoomIndex].connections.includes(nextRoomId)) {
+      addLog("❌ That room is not connected!");
+      return;
+    }
+    enterRoom(nextRoomId);
+  };
+
   const resetGame = () => {
     const newPool = [...enemyPool];
     const firstEnemy = getRandomEnemy(newPool);
@@ -419,8 +427,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         enterDungeon,
         map,
         currentRoomIndex,
-        enterRoom,
         roomLocked,
+        moveToRoom,
       }}
     >
       {children}

@@ -22,6 +22,7 @@ export default function EnemyBattleUI() {
                   height={100}
                   width={100}
                   priority
+                  className="h-auto w-auto"
                 />
               </div>
 
