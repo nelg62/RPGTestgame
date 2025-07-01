@@ -2,9 +2,26 @@ import { useGame } from "@/context/GameContext";
 import { MAP_WIDTH } from "../utils/generateMap";
 
 export default function RoomMap() {
-  const { map } = useGame();
+  const { map, currentRoomIndex, enterRoom } = useGame();
   return (
     <div className="w-full content-center">
+      <h2 className="text-center">Room {currentRoomIndex + 1}</h2>
+      <p className="text-center">
+        Type:{" "}
+        {
+          {
+            start: "Start",
+            enemy: "Enemy",
+            treasure: "Treasure",
+            healing: "Healing",
+            empty: "Empty",
+            boss: "Boss",
+          }[map[currentRoomIndex].type]
+        }
+      </p>
+
+      <h3 className="text-center">🗺️ Dungeon Map</h3>
+
       <div
         style={{
           display: "grid",
@@ -16,7 +33,7 @@ export default function RoomMap() {
       >
         {map.map((room, i) => {
           return (
-            <button key={room.id}>
+            <button key={room.id} onClick={() => enterRoom(i)}>
               {room.type} Room {i + 1}
             </button>
           );

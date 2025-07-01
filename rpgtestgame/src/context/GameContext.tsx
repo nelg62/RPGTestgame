@@ -22,6 +22,8 @@ type GameContextType = {
   exploringDungeon: boolean;
   enterDungeon: () => void;
   map: Room[];
+  currentRoomIndex: number;
+  enterRoom: (index: number) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -81,6 +83,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [exploringDungeon, setExploringDungeon] = useState(false);
 
   const [map, setMap] = useState<Room[]>([]);
+  const [currentRoomIndex, setCurrentRoomIndex] = useState(0);
 
   // get a random ememy
   function getRandomEnemy(pool: Character[]): Character | null {
@@ -186,6 +189,14 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     setMap(generateMaze());
   };
 
+  const enterRoom = (index: number) => {
+    const newMap = [...map];
+    const room = newMap[index];
+    room.visited = true;
+    setMap(newMap);
+    setCurrentRoomIndex(index);
+  };
+
   const resetGame = () => {
     const newPool = [...enemyPool];
     const firstEnemy = getRandomEnemy(newPool);
@@ -221,6 +232,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         exploringDungeon,
         enterDungeon,
         map,
+        currentRoomIndex,
+        enterRoom,
       }}
     >
       {children}
