@@ -28,6 +28,7 @@ type GameContextType = {
   roomLocked: boolean;
   inventory: Items[];
   addToInventory: () => void;
+  handleUseItem: (item: string) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -319,6 +320,35 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     setInventory((prev) => [...prev, items[0]]);
   };
 
+  const handleUseItem = (itemName: string) => {
+    const itemIndex = inventory.findIndex((item) => item.name === itemName);
+    if (itemIndex === -1) {
+      addLog("Item not found in inventory");
+      return;
+    }
+
+    switch (itemName) {
+      case "potion":
+        addLog("🎁 You Have used a potion! (+10 HP)");
+        setPlayer((prev) => ({
+          ...prev,
+          hp: Math.min(prev.hp + 20, prev.maxHp),
+        }));
+
+        break;
+
+      default:
+        addLog("unknown Item");
+        break;
+    }
+
+    setInventory((prev) => {
+      const newInventory = [...prev];
+      newInventory.splice(itemIndex, 1);
+      return newInventory;
+    });
+  };
+
   const resetGame = () => {
     const newPool = [...enemyPool];
     const firstEnemy = getRandomEnemy(newPool);
@@ -359,6 +389,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         moveToRoom,
         inventory,
         addToInventory,
+        handleUseItem,
       }}
     >
       {children}
