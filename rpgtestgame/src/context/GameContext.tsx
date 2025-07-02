@@ -1,4 +1,5 @@
 "use client";
+import { Items } from "@/app/types/items";
 import { Character } from "@/app/types/player";
 import { Room } from "@/app/types/room";
 import { attack } from "@/app/utils/battle";
@@ -25,6 +26,8 @@ type GameContextType = {
   currentRoomIndex: number;
   moveToRoom: (index: number) => void;
   roomLocked: boolean;
+  inventory: Items[];
+  addToInventory: () => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -51,6 +54,12 @@ const enemyPool: Character[] = [
     maxHp: 40,
     attack: 7,
     image: "/sabina-music-rich-OJy0JHnoUZQ-unsplash.jpg",
+  },
+];
+
+const items: Items[] = [
+  {
+    name: "potion",
   },
 ];
 
@@ -87,6 +96,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [currentRoomIndex, setCurrentRoomIndex] = useState(0);
 
   const [roomLocked, setRoomLocked] = useState(false);
+
+  const [inventory, setInventory] = useState<Items[]>([]);
 
   // get a random ememy
   function getRandomEnemy(pool: Character[]): Character | null {
@@ -186,71 +197,6 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // const handlePlayerAttack = () => {
-  //   // if no target and not player turn then do nothing
-  //   if (turn !== "player" || !currentEnemy || player.hp <= 0) return;
-
-  //   // attack the enemy with attack function and return message
-  //   const { updatedTarget, message } = attack(player, currentEnemy);
-
-  //   setCurrentEnemy(updatedTarget);
-  //   addLog(message);
-
-  //   const updatedEnemies = remainingEnemies.map((enemy) =>
-  //     enemy.name === currentEnemy.name ? updatedTarget : enemy
-  //   );
-  //   setRemainingEnemies(updatedEnemies);
-
-  //   // if monster still has health
-  //   if (updatedTarget.hp > 0) {
-  //     // set the turn to monster
-  //     setTurn("monster");
-  //     //   wait a bit and then call handlemonster turn function to attack
-  //     setTimeout(() => {
-  //       handleMonsterTurn();
-  //     }, 1000);
-  //   } else {
-  //     // if monster has no health
-  //     addLog(`✅ ${currentEnemy.name} was defeated!`);
-
-  //     const updatedPool = remainingEnemies.filter(
-  //       (enemy) => enemy.name !== currentEnemy.name
-  //     );
-  //     setRemainingEnemies(updatedPool);
-
-  //     if (exploringDungeon) {
-  //       setInCombat(false);
-  //       setRoomLocked(false);
-  //       setCurrentEnemy(null);
-  //       addLog("🎉 You cleared the room!");
-  //     } else if (updatedPool.length > 0) {
-  //       const nextEnemy = getRandomEnemy(updatedPool);
-  //       setCurrentEnemy(nextEnemy);
-  //       setTurn("player");
-  //     } else {
-  //       // if there are no more enemies all defeated and end combat
-  //       addLog("🎉 You defeated all the enemies!");
-  //       setCurrentEnemy(null);
-  //       setInCombat(false);
-  //     }
-  //   }
-  // };
-
-  //   monster attack
-  //   const handleMonsterTurn = (enemy: Character) => {
-  //     const { updatedTarget, message } = attack(enemy, player);
-  //     setPlayer(updatedTarget);
-  //     addLog(message);
-
-  //     // check if player health is more then 0
-  //     if (updatedTarget.hp > 0) {
-  //       setTurn("player");
-  //     } else {
-  //       addLog("You were defeated");
-  //       setInCombat(false);
-  //     }
-  //   };
-
   // random monster attacks
   const handleMonsterTurn = () => {
     if (exploringDungeon) {
@@ -305,31 +251,6 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // const handleMonsterTurn = () => {
-  //   if (remainingEnemies.length === 0) return;
-
-  //   const randomEnemy = getRandomEnemy(remainingEnemies);
-  //   if (!randomEnemy) return;
-
-  //   setAttackingEnemy(randomEnemy);
-
-  //   const { updatedTarget, message } = attack(randomEnemy, player);
-  //   setPlayer(updatedTarget);
-  //   addLog(`${randomEnemy.name} attacks! ` + message);
-
-  //   // check if player health is more then 0
-  //   if (updatedTarget.hp > 0) {
-  //     setTimeout(() => {
-  //       setAttackingEnemy(null);
-  //       setTurn("player");
-  //     }, 500);
-  //   } else {
-  //     addLog("You were defeated");
-  //     setAttackingEnemy(null);
-  //     setInCombat(false);
-  //   }
-  // };
-
   const enterDungeon = () => {
     setExploringDungeon(true);
     setMap(generateMaze());
@@ -361,6 +282,9 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       setRoomLocked(false);
       if (room.type === "treasure") {
         addLog("🎁 You found a treasure chest! (+10 HP)");
+        setInventory((prev) => [...prev, items[0]]);
+        console.log("inventory", inventory);
+
         setPlayer((prev) => ({
           ...prev,
           hp: Math.min(prev.hp + 10, prev.maxHp),
@@ -389,6 +313,10 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
     enterRoom(nextRoomId);
+  };
+
+  const addToInventory = () => {
+    setInventory((prev) => [...prev, items[0]]);
   };
 
   const resetGame = () => {
@@ -429,6 +357,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         currentRoomIndex,
         roomLocked,
         moveToRoom,
+        inventory,
+        addToInventory,
       }}
     >
       {children}

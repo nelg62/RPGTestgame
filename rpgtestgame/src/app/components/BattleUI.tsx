@@ -2,7 +2,9 @@ import { useGame } from "@/context/GameContext";
 import TurnIndicator from "./TurnIndicator";
 
 export default function BattleUI() {
-  const { turn, handlePlayerAttack, log, inCombat } = useGame();
+  const { turn, handlePlayerAttack, log, inCombat, inventory, addToInventory } =
+    useGame();
+  console.log("inventory", inventory);
 
   return (
     <>
@@ -27,6 +29,17 @@ export default function BattleUI() {
             <li key={index}>{entry}</li>
           ))}
         </ul>
+        <button onClick={addToInventory}>Inventory</button>
+        {inventory.length > 0 ? (
+          <ul className="m-2 text-sm text-black max-h-40 overflow-y-auto bg-gray-100 p-2 rounded">
+            {inventory.map((entry, index) => (
+              <li key={index}>{entry.name}</li>
+            ))}
+            {/* <li>{inventory[0].name}</li> */}
+          </ul>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
