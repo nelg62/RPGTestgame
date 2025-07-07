@@ -105,6 +105,8 @@ export const generateMaze = (): Room[] => {
     maxHp: 100,
     attack: 12,
     image: "/user.png",
+    gold: 100,
+    emoji: "🕴",
   };
 
   for (const room of rooms) {
@@ -121,6 +123,8 @@ export const generateMaze = (): Room[] => {
           maxHp: 25,
           attack: 4,
           image: "/todd-cravens-IY1sRDxNWN4-unsplash.jpg",
+          gold: 10,
+          emoji: "🦇",
         },
         {
           name: "Zombie",
@@ -128,6 +132,8 @@ export const generateMaze = (): Room[] => {
           maxHp: 35,
           attack: 6,
           image: "/julien-tromeur-6-adg66qleM-unsplash.jpg",
+          gold: 15,
+          emoji: "🧟",
         },
         {
           name: "Skeleton",
@@ -135,6 +141,8 @@ export const generateMaze = (): Room[] => {
           maxHp: 40,
           attack: 7,
           image: "/sabina-music-rich-OJy0JHnoUZQ-unsplash.jpg",
+          gold: 20,
+          emoji: "💀🦴",
         },
       ];
       room.enemy = enemyPool[Math.floor(Math.random() * enemyPool.length)];

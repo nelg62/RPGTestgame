@@ -3,7 +3,7 @@ import DisplayAllMonsters from "./DisplayAllMonsters";
 import { useRouter } from "next/navigation";
 
 export default function ShopDisplay() {
-  const { inCombat, addToInventory } = useGame();
+  const { inCombat, handleBuyItem } = useGame();
 
   const router = useRouter();
 
@@ -18,7 +18,7 @@ export default function ShopDisplay() {
           Back to game
         </button>
         <button
-          onClick={addToInventory}
+          onClick={() => handleBuyItem("potion")}
           className="m-2 p-2 bg-blue-500 text-white rounded"
         >
           Buy Potion

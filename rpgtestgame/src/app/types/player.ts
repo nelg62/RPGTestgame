@@ -6,4 +6,5 @@ export type Character = {
   attack: number;
   image: string;
   gold: number;
+  emoji: string;
 };

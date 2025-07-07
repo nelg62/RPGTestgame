@@ -27,8 +27,9 @@ type GameContextType = {
   moveToRoom: (index: number) => void;
   roomLocked: boolean;
   inventory: Items[];
-  addToInventory: () => void;
+  // addToInventory: () => void;
   handleUseItem: (item: string) => void;
+  handleBuyItem: (item: string) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -42,6 +43,7 @@ const enemyPool: Character[] = [
     attack: 4,
     image: "/todd-cravens-IY1sRDxNWN4-unsplash.jpg",
     gold: 10,
+    emoji: "🦇",
   },
   {
     name: "Zombie",
@@ -50,6 +52,7 @@ const enemyPool: Character[] = [
     attack: 6,
     image: "/julien-tromeur-6-adg66qleM-unsplash.jpg",
     gold: 15,
+    emoji: "🧟",
   },
   {
     name: "Skeleton",
@@ -58,6 +61,7 @@ const enemyPool: Character[] = [
     attack: 7,
     image: "/sabina-music-rich-OJy0JHnoUZQ-unsplash.jpg",
     gold: 20,
+    emoji: "💀🦴",
   },
 ];
 
@@ -76,6 +80,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     attack: 10,
     image: "/user.png",
     gold: 100,
+    emoji: "🧙‍♂️",
   });
 
   //   set enemies in to a state
@@ -121,7 +126,9 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       const loot = Math.floor(Math.random() * currentEnemy?.gold);
       console.log("loot", loot);
       player.gold += loot;
-      addLog(`You have gained ${loot} Gold for defeating ${currentEnemy.name}`);
+      addLog(
+        `💰 You have gained ${loot} Gold for defeating ${currentEnemy.name}`
+      );
       return loot;
     }
   };
@@ -231,7 +238,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
     const { updatedTarget, message } = attack(currentEnemy, player);
     setPlayer(updatedTarget);
-    addLog(`${currentEnemy.name} attacks! ` + message);
+    addLog(`${currentEnemy.emoji} ${currentEnemy.name} attacks! ` + message);
 
     if (updatedTarget.hp > 0) {
       setTimeout(() => {
@@ -255,7 +262,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
     const { updatedTarget, message } = attack(randomEnemy, player);
     setPlayer(updatedTarget);
-    addLog(`${randomEnemy.name} attacks! ` + message);
+    addLog(`${randomEnemy.emoji} ${randomEnemy.name} attacks! ` + message);
 
     if (updatedTarget.hp > 0) {
       setTimeout(() => {
@@ -333,8 +340,23 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     enterRoom(nextRoomId);
   };
 
-  const addToInventory = () => {
-    setInventory((prev) => [...prev, items[0]]);
+  const addToInventory = (number: number) => {
+    setInventory((prev) => [...prev, items[number]]);
+  };
+
+  const handleBuyItem = (item: string) => {
+    switch (item) {
+      case "potion":
+        if (player.gold >= 50) {
+          addToInventory(0);
+          player.gold -= 50;
+          addLog(`You have bought a ${item}`);
+        } else {
+          addLog("Not enough gold");
+        }
+
+        break;
+    }
   };
 
   const handleUseItem = (itemName: string) => {
@@ -377,6 +399,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       attack: 10,
       image: "/user.png",
       gold: 100,
+      emoji: "🧙‍♂️",
     });
     setRemainingEnemies(newPool);
     setCurrentEnemy(firstEnemy);
@@ -406,8 +429,9 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         roomLocked,
         moveToRoom,
         inventory,
-        addToInventory,
+        // addToInventory,
         handleUseItem,
+        handleBuyItem,
       }}
     >
       {children}
