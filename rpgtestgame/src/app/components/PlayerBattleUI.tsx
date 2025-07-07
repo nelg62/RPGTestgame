@@ -27,6 +27,7 @@ export default function PlayerBattleUI() {
           max={player.maxHp}
           color="bg-green-500"
         />
+        <p>Gold: {player.gold}</p>
       </div>
     </>
   );

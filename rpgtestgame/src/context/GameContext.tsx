@@ -41,6 +41,7 @@ const enemyPool: Character[] = [
     maxHp: 25,
     attack: 4,
     image: "/todd-cravens-IY1sRDxNWN4-unsplash.jpg",
+    gold: 10,
   },
   {
     name: "Zombie",
@@ -48,6 +49,7 @@ const enemyPool: Character[] = [
     maxHp: 35,
     attack: 6,
     image: "/julien-tromeur-6-adg66qleM-unsplash.jpg",
+    gold: 15,
   },
   {
     name: "Skeleton",
@@ -55,6 +57,7 @@ const enemyPool: Character[] = [
     maxHp: 40,
     attack: 7,
     image: "/sabina-music-rich-OJy0JHnoUZQ-unsplash.jpg",
+    gold: 20,
   },
 ];
 
@@ -72,6 +75,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     maxHp: 100,
     attack: 10,
     image: "/user.png",
+    gold: 100,
   });
 
   //   set enemies in to a state
@@ -112,6 +116,16 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     setLog((prev) => [message, ...prev]);
   };
 
+  const getEnemyGold = () => {
+    if (currentEnemy?.gold) {
+      const loot = Math.floor(Math.random() * currentEnemy?.gold);
+      console.log("loot", loot);
+      player.gold += loot;
+      addLog(`You have gained ${loot} Gold for defeating ${currentEnemy.name}`);
+      return loot;
+    }
+  };
+
   //   attack all enemeys in the enemy array
   const handlePlayerAttack = () => {
     if (exploringDungeon) {
@@ -137,6 +151,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       }, 1000);
     } else {
       addLog(`✅ ${currentEnemy.name} was defeated!`);
+
+      console.log(getEnemyGold());
 
       setRoomLocked(false);
       setInCombat(false);
@@ -180,6 +196,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       }, 1000);
     } else {
       addLog(`✅ ${currentEnemy.name} was defeated!`);
+      console.log(getEnemyGold());
 
       const updatedPool = remainingEnemies.filter(
         (enemy) => enemy.name !== currentEnemy.name
@@ -359,6 +376,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       maxHp: 100,
       attack: 10,
       image: "/user.png",
+      gold: 100,
     });
     setRemainingEnemies(newPool);
     setCurrentEnemy(firstEnemy);

@@ -1,14 +1,14 @@
 "use client";
 import GameDisplay from "@/app/components/GameDisplay";
-import RoomDisplay from "@/app/components/RoomDisplay";
+import ShopDisplay from "@/app/components/ShopDisplay";
 import { GameProvider } from "@/context/GameContext";
 
-export default function GamePage() {
+export default function ShopPage() {
   return (
     <>
       <GameProvider>
         {/* display room  */}
-        <RoomDisplay />
+        <ShopDisplay />
         {/* display game */}
         <GameDisplay />
       </GameProvider>

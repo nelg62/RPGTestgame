@@ -5,4 +5,5 @@ export type Character = {
   maxHp: number;
   attack: number;
   image: string;
+  gold: number;
 };

@@ -1,5 +1,6 @@
 import { useGame } from "@/context/GameContext";
 import TurnIndicator from "./TurnIndicator";
+import { useRouter } from "next/navigation";
 
 export default function BattleUI() {
   const {
@@ -12,6 +13,8 @@ export default function BattleUI() {
     handleUseItem,
   } = useGame();
   console.log("inventory", inventory);
+
+  const router = useRouter();
 
   return (
     <>
@@ -36,7 +39,12 @@ export default function BattleUI() {
             <li key={index}>{entry}</li>
           ))}
         </ul>
-        <button onClick={addToInventory}>Inventory</button>
+        <button
+          onClick={addToInventory}
+          className="m-2 p-2 bg-blue-500 text-white rounded"
+        >
+          Inventory
+        </button>
         {inventory.length > 0 ? (
           <ul className="m-2 text-sm text-black max-h-40 overflow-y-auto bg-gray-100 p-2 rounded">
             {inventory.map((entry, index) => (
@@ -49,6 +57,12 @@ export default function BattleUI() {
         ) : (
           ""
         )}
+        <button
+          onClick={() => router.push("./shop")}
+          className="m-2 p-2 bg-blue-500 text-white rounded"
+        >
+          Shop
+        </button>
       </div>
     </>
   );

@@ -19,7 +19,7 @@ export default function DisplayAllMonsters() {
         <div key={currentEnemy?.name} className="w-1/4">
           {inCombat && (
             <div
-              onClick={() => setCurrentEnemy(attackingEnemy)}
+              // onClick={() => setCurrentEnemy(attackingEnemy)}
               className={`border h-full ${
                 turn == "player"
                   ? currentEnemy?.name === currentEnemy?.name
@@ -103,6 +103,19 @@ export default function DisplayAllMonsters() {
                         color="bg-red-500"
                       />
                     </>
+                  )}
+                  {attackingEnemy?.name === enemy.name ? (
+                    <div className="justify-center items-center flex">
+                      <Image
+                        src={"/download.png"}
+                        alt="Enemy image"
+                        height={100}
+                        width={100}
+                        priority
+                      />
+                    </div>
+                  ) : (
+                    ""
                   )}
                 </div>
               )}
