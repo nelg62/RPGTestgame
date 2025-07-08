@@ -51,9 +51,40 @@ export default function RoomUi() {
                 height="1"
               />
             </pattern>
+            <pattern
+              id="dungeon-floor-texture"
+              patternUnits="objectBoundingBox"
+              patternContentUnits="objectBoundingBox"
+              width="1"
+              height="1"
+            >
+              <image
+                href="/360_F_242204753_XVb0wZ5RY2yagALVIcsU4jKK91WPJsyg.jpg"
+                preserveAspectRatio="xMidYMid slice"
+                width="1"
+                height="1"
+              />
+            </pattern>
+            <pattern
+              id="dungeon-roof-texture"
+              patternUnits="objectBoundingBox"
+              patternContentUnits="objectBoundingBox"
+              width="1"
+              height="1"
+            >
+              <image
+                href="/images.jpg"
+                preserveAspectRatio="xMidYMid slice"
+                width="1"
+                height="1"
+              />
+            </pattern>
           </defs>
           {/* Floor */}
-          <polygon points="-200,500 700,500 500,300 0,300" fill="#666" />
+          <polygon
+            points="-200,500 700,500 500,300 0,300"
+            fill="url(#dungeon-floor-texture)"
+          />
 
           {/* Ceiling */}
           <polygon points="-200,0 700,0 500,150 0,150" fill="#333" />
@@ -62,16 +93,28 @@ export default function RoomUi() {
           <polygon
             points="-200,0 -200,500 0,300 0,150"
             fill="url(#dungeon-texture)"
+            stroke="#000"
+            strokeWidth="2"
           />
 
           {/* Right Wall */}
           <polygon
             points="700,0 700,500 500,300 500,150"
             fill="url(#dungeon-texture)"
+            stroke="#000"
+            strokeWidth="2"
           />
 
           {/* Back Wall */}
-          <rect x="0" y="150" width="500" height="150" fill="#444" />
+          <rect
+            x="0"
+            y="150"
+            width="500"
+            height="150"
+            fill="url(#dungeon-texture)"
+            stroke="#000"
+            strokeWidth="2"
+          />
 
           {/*Back Wall Door */}
           {!top && (
@@ -85,6 +128,10 @@ export default function RoomUi() {
                 stroke="#aaa"
                 strokeWidth="2"
                 rx="4"
+                className={`${
+                  map[topRoom].type === "enemy" ? "stroke-red-500" : ""
+                }
+                ${map[topRoom].type === "treasure" ? "stroke-yellow-500" : ""}`}
               />
               <text
                 x="250"
@@ -94,7 +141,7 @@ export default function RoomUi() {
                 fontSize="12"
                 className="pointer-events-none select-none"
               >
-                Forward
+                Forward {map[topRoom].type}
               </text>
             </g>
           )}
@@ -107,6 +154,11 @@ export default function RoomUi() {
                 fill="#222"
                 stroke="#aaa"
                 strokeWidth="2"
+                className={`${
+                  map[leftRoom].type === "enemy" ? "stroke-red-500" : ""
+                }${
+                  map[leftRoom].type === "treasure" ? "stroke-yellow-500" : ""
+                }`}
               />
               <text
                 x="-100"
@@ -115,7 +167,7 @@ export default function RoomUi() {
                 fontSize="12"
                 className="pointer-events-none select-none"
               >
-                Left
+                Left {map[leftRoom].type}
               </text>
             </g>
           )}
@@ -131,6 +183,11 @@ export default function RoomUi() {
                 fill="#222"
                 stroke="#aaa"
                 strokeWidth="2"
+                className={`${
+                  map[rightRoom].type === "enemy" ? "stroke-red-500" : ""
+                }${
+                  map[rightRoom].type === "treasure" ? "stroke-yellow-500" : ""
+                }`}
               />
               <text
                 x="600"
@@ -139,7 +196,7 @@ export default function RoomUi() {
                 fontSize="12"
                 className="pointer-events-none select-none"
               >
-                Right
+                Right {map[rightRoom].type}
               </text>
             </g>
           )}
@@ -156,7 +213,13 @@ export default function RoomUi() {
                 stroke="#aaa"
                 strokeWidth="2"
                 rx="4"
+                className={`${
+                  map[bottomRoom].type === "enemy" ? "stroke-red-500" : ""
+                }${
+                  map[bottomRoom].type === "treasure" ? "stroke-yellow-500" : ""
+                }`}
               />
+
               <text
                 x="250"
                 y="465"
@@ -165,7 +228,7 @@ export default function RoomUi() {
                 fontSize="12"
                 className="pointer-events-none select-none"
               >
-                Exit
+                Exit {map[bottomRoom].type}
               </text>
             </g>
           )}
