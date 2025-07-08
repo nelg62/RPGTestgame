@@ -72,6 +72,8 @@ const items: Items[] = [
 ];
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
+  console.log("GameProvider mounted");
+
   //   create the player
   const [player, setPlayer] = useState<Character>({
     name: "Hero",
@@ -125,7 +127,10 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     if (currentEnemy?.gold) {
       const loot = Math.floor(Math.random() * currentEnemy?.gold);
       console.log("loot", loot);
-      player.gold += loot;
+      setPlayer((prev) => ({
+        ...prev,
+        gold: prev.gold + loot,
+      }));
       addLog(
         `💰 You have gained ${loot} Gold for defeating ${currentEnemy.name}`
       );
@@ -349,7 +354,10 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       case "potion":
         if (player.gold >= 50) {
           addToInventory(0);
-          player.gold -= 50;
+          setPlayer((prev) => ({
+            ...prev,
+            gold: prev.gold - 50,
+          }));
           addLog(`You have bought a ${item}`);
         } else {
           addLog("Not enough gold");
