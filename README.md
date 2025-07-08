@@ -119,12 +119,13 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 - [![Next][Next.js]][Next-url]
 - [![React][React.js]][React-url]
-- [![Vue][Vue.js]][Vue-url]
+- [![TypeScript][TypeScript-badge]][TypeScript-url]
+<!-- - [![Vue][Vue.js]][Vue-url]
 - [![Angular][Angular.io]][Angular-url]
 - [![Svelte][Svelte.dev]][Svelte-url]
 - [![Laravel][Laravel.com]][Laravel-url]
 - [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-- [![JQuery][JQuery.com]][JQuery-url]
+- [![JQuery][JQuery.com]][JQuery-url] -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -146,23 +147,21 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/nelg62/RPGTestgame.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+3. Start App
    ```js
-   const API_KEY = "ENTER YOUR API";
+   npm run dev
    ```
-5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin nelg62/RPGTestgame
-   git remote -v # confirm the changes
+4. Browse to
+   ```
+   http://localhost:3000/
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -279,3 +278,5 @@ Project Link: [https://github.com/nelg62/RPGTestgame](https://github.com/nelg62/
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com
+[TypeScript-badge]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/

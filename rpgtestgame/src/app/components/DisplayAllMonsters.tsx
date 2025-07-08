@@ -56,6 +56,19 @@ export default function DisplayAllMonsters() {
                   />
                 </>
               )}
+              {attackingEnemy?.name === currentEnemy?.name ? (
+                <div className="justify-center items-center flex">
+                  <Image
+                    src={"/download.png"}
+                    alt="Enemy image"
+                    height={100}
+                    width={100}
+                    priority
+                  />
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           )}
         </div>
