@@ -24,7 +24,7 @@ type GameContextType = {
   enterDungeon: () => void;
   map: Room[];
   currentRoomIndex: number;
-  moveToRoom: (index: number) => void;
+  moveToRoom: (index: number | null) => void;
   roomLocked: boolean;
   inventory: Items[];
   // addToInventory: () => void;
@@ -337,7 +337,10 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const moveToRoom = (nextRoomId: number) => {
+  const moveToRoom = (nextRoomId: number | null) => {
+    if (!nextRoomId) {
+      return;
+    }
     if (!map[currentRoomIndex].connections.includes(nextRoomId)) {
       addLog("❌ That room is not connected!");
       return;
