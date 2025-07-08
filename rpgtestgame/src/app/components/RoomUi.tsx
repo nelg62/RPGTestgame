@@ -36,6 +36,22 @@ export default function RoomUi() {
           className="w-full h-full"
           preserveAspectRatio="xMidYMid meet"
         >
+          <defs>
+            <pattern
+              id="dungeon-texture"
+              patternUnits="objectBoundingBox"
+              patternContentUnits="objectBoundingBox"
+              width="1"
+              height="1"
+            >
+              <image
+                href="/Texturelabs_Brick_141S.jpg"
+                preserveAspectRatio="xMidYMid slice"
+                width="1"
+                height="1"
+              />
+            </pattern>
+          </defs>
           {/* Floor */}
           <polygon points="-200,500 700,500 500,300 0,300" fill="#666" />
 
@@ -43,10 +59,16 @@ export default function RoomUi() {
           <polygon points="-200,0 700,0 500,150 0,150" fill="#333" />
 
           {/* Left Wall */}
-          <polygon points="-200,0 -200,500 0,300 0,150" fill="#555" />
+          <polygon
+            points="-200,0 -200,500 0,300 0,150"
+            fill="url(#dungeon-texture)"
+          />
 
           {/* Right Wall */}
-          <polygon points="700,0 700,500 500,300 500,150" fill="#555" />
+          <polygon
+            points="700,0 700,500 500,300 500,150"
+            fill="url(#dungeon-texture)"
+          />
 
           {/* Back Wall */}
           <rect x="0" y="150" width="500" height="150" fill="#444" />
