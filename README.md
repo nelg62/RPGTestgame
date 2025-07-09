@@ -180,7 +180,7 @@ This is an example of how to list things you need to use the software and how to
 
 ## Usage
 
-go to https://686dc7e75215c40008da630c--rpgtestgameglenharding.netlify.app/ to Demo the app
+go to https://686dcaa97192320008d60ab0--rpgtestgameglenharding.netlify.app/game to Demo the app
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
