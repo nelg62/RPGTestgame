@@ -1,6 +1,6 @@
 # RPGTestgame
 
-read me to be tidyed adding as i create things
+<!-- read me to be tidyed adding as i create things
 
 Creating a basic rpg and seeing were it goes
 
@@ -19,7 +19,7 @@ attack annimations for each enemy
 
 create seperate components for invetory battle log and shop
 
-create logic for handling buying item remove gold and check if enough gold
+create logic for handling buying item remove gold and check if enough gold -->
 
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 
@@ -106,9 +106,9 @@ This project is a way for me to bring those ideas to life and see where my creat
 ## About The Project
 
 Dungeon Map Video
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://686dc7e75215c40008da630c--rpgtestgameglenharding.netlify.app/)
 Multiple Enemy Battle Video
-[![Product Name Screen Shot][product-screenshot2]](https://example.com)
+[![Product Name Screen Shot][product-screenshot2]](https://686dc7e75215c40008da630c--rpgtestgameglenharding.netlify.app/)
 
 <h4>Features</h4>
 <ul>
@@ -152,18 +152,24 @@ This is an example of how to list things you need to use the software and how to
 ### Installation
 
 1. Clone the repo
+
    ```sh
    git clone https://github.com/nelg62/RPGTestgame.git
    ```
-2. Install NPM packages
+
+2. Change directory
+   ```sh
+   cd rpgtestgame
+   ```
+3. Install NPM packages
    ```sh
    npm install
    ```
-3. Start App
+4. Start App
    ```js
    npm run dev
    ```
-4. Browse to
+5. Browse to
    ```
    http://localhost:3000/
    ```
@@ -174,9 +180,7 @@ This is an example of how to list things you need to use the software and how to
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+go to https://686dc7e75215c40008da630c--rpgtestgameglenharding.netlify.app/ to Demo the app
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
