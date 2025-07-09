@@ -53,7 +53,7 @@ create logic for handling buying item remove gold and check if enough gold -->
 <br />
 <div align="center">
   <a href="https://github.com/nelg62/RPGTestgame">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="rpgtestgame/public/sabina-music-rich-OJy0JHnoUZQ-unsplash.jpg" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">RPG Test Game</h3>
