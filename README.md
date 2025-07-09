@@ -59,16 +59,19 @@ create logic for handling buying item remove gold and check if enough gold
 <h3 align="center">RPG Test Game</h3>
 
   <p align="center">
-    I am creating a basic rpg gam,e and seeing were it goes I have always enjoyed playing rpg games with stats and loot and exp and dungeon crawling leveling up your character and getting new items and stats and powers to use exploring new worlds and places I have decided to make this project to see were my inajination takes me and I have always wnated to ry and make a game my7 inparations are currenly from adventurequest binding of isaac runescape and others i am sure 
-    <br />
-    <a href="https://github.com/nelg62/RPGTestgame"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/nelg62/RPGTestgame">View Demo</a>
-    ·
-    <a href="https://github.com/nelg62/RPGTestgame/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    ·
-    <a href="https://github.com/nelg62/RPGTestgame/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+ I’m creating a basic RPG game to see where it takes me. I’ve always enjoyed playing RPGs that involve stats, loot, experience, dungeon crawling, leveling up your character, and discovering new powers and items. Exploring new worlds and places has always sparked my imagination.
+
+This project is a way for me to bring those ideas to life and see where my creativity leads. I've always wanted to try making a game, and now felt like the right time to start. My inspirations include AdventureQuest, The Binding of Isaac, RuneScape, and many others I’m sure will influence me along the way.
+<br />
+<a href="https://github.com/nelg62/RPGTestgame"><strong>Explore the docs »</strong></a>
+<br />
+<br />
+<a href="https://github.com/nelg62/RPGTestgame">View Demo</a>
+·
+<a href="https://github.com/nelg62/RPGTestgame/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+·
+<a href="https://github.com/nelg62/RPGTestgame/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+
   </p>
 </div>
 
@@ -102,9 +105,10 @@ create logic for handling buying item remove gold and check if enough gold
 
 ## About The Project
 
+Dungeon Map Video
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+Multiple Enemy Battle Video
+[![Product Name Screen Shot][product-screenshot2]](https://example.com)
 
 <h4>Features</h4>
 <ul>
@@ -261,7 +265,8 @@ Project Link: [https://github.com/nelg62/RPGTestgame](https://github.com/nelg62/
 [license-url]: https://github.com/nelg62/RPGTestgame/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/glen-harding-5a1317114
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: /rpgtestgame//public/Shopanddungeon.gif
+[product-screenshot2]: /rpgtestgame//public/Shopandbattleenemys.gif
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB

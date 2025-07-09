@@ -28,6 +28,19 @@ export default function RoomUi() {
       ? currentRoomIndex + 1
       : null;
 
+  const getStrokeColor = (index: number | null): string => {
+    if (index === null) return "#aaa";
+    const type = map[index]?.type;
+    if (type === "enemy") return "red";
+    if (type === "treasure") return "gold";
+    return "#aaa";
+  };
+
+  const getRoomLabel = (index: number | null, fallback: string): string => {
+    if (index === null || !map[index]) return fallback;
+    return `${fallback} (${map[index].type})`;
+  };
+
   return (
     <div className="w-full bg-black">
       <div className="w-full h-full max-w-[900px] mx-auto aspect-[2/1]">
@@ -125,13 +138,9 @@ export default function RoomUi() {
                 width="60"
                 height="100"
                 fill="#222"
-                stroke="#aaa"
+                stroke={getStrokeColor(topRoom)}
                 strokeWidth="2"
                 rx="4"
-                className={`${
-                  map[topRoom].type === "enemy" ? "stroke-red-500" : ""
-                }
-                ${map[topRoom].type === "treasure" ? "stroke-yellow-500" : ""}`}
               />
               <text
                 x="250"
@@ -141,7 +150,7 @@ export default function RoomUi() {
                 fontSize="12"
                 className="pointer-events-none select-none"
               >
-                Forward {map[topRoom].type}
+                {getRoomLabel(topRoom, "Up")}
               </text>
             </g>
           )}
@@ -150,15 +159,10 @@ export default function RoomUi() {
           {!left && (
             <g onClick={() => moveToRoom(leftRoom)} className="cursor-pointer ">
               <polygon
-                points="-100,410 -80,390 -80,190 -100,170"
+                points="-100,410 -50,350 -50,190 -100,170"
                 fill="#222"
-                stroke="#aaa"
+                stroke={getStrokeColor(leftRoom)}
                 strokeWidth="2"
-                className={`${
-                  map[leftRoom].type === "enemy" ? "stroke-red-500" : ""
-                }${
-                  map[leftRoom].type === "treasure" ? "stroke-yellow-500" : ""
-                }`}
               />
               <text
                 x="-100"
@@ -167,7 +171,7 @@ export default function RoomUi() {
                 fontSize="12"
                 className="pointer-events-none select-none"
               >
-                Left {map[leftRoom].type}
+                {getRoomLabel(leftRoom, "Left")}
               </text>
             </g>
           )}
@@ -179,15 +183,10 @@ export default function RoomUi() {
               className="cursor-pointer "
             >
               <polygon
-                points="600,410 620,430 620,190 600,210"
+                points="580,380 620,430 620,190 580,210"
                 fill="#222"
-                stroke="#aaa"
+                stroke={getStrokeColor(rightRoom)}
                 strokeWidth="2"
-                className={`${
-                  map[rightRoom].type === "enemy" ? "stroke-red-500" : ""
-                }${
-                  map[rightRoom].type === "treasure" ? "stroke-yellow-500" : ""
-                }`}
               />
               <text
                 x="600"
@@ -196,7 +195,7 @@ export default function RoomUi() {
                 fontSize="12"
                 className="pointer-events-none select-none"
               >
-                Right {map[rightRoom].type}
+                {getRoomLabel(rightRoom, "Right")}
               </text>
             </g>
           )}
@@ -208,16 +207,11 @@ export default function RoomUi() {
               className="cursor-pointer "
             >
               <polygon
-                points="230,500 270,500 260,470 240,470"
+                points="200,500 300,500 290,440 210,440"
                 fill="#222"
-                stroke="#aaa"
+                stroke={getStrokeColor(bottomRoom)}
                 strokeWidth="2"
                 rx="4"
-                className={`${
-                  map[bottomRoom].type === "enemy" ? "stroke-red-500" : ""
-                }${
-                  map[bottomRoom].type === "treasure" ? "stroke-yellow-500" : ""
-                }`}
               />
 
               <text
@@ -228,7 +222,7 @@ export default function RoomUi() {
                 fontSize="12"
                 className="pointer-events-none select-none"
               >
-                Exit {map[bottomRoom].type}
+                {getRoomLabel(bottomRoom, "Down")}
               </text>
             </g>
           )}
