@@ -1,18 +1,18 @@
 import { useGame } from "@/context/GameContext";
 import DisplayAllMonsters from "./DisplayAllMonsters";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import RoomUi from "./RoomUi";
+import TownUi from "./TownUi";
 
 export default function RoomDisplay() {
-  const { setInCombat, resetGame, inCombat, enterDungeon, exploringDungeon } =
-    useGame();
+  const { inCombat, exploringDungeon } = useGame();
 
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <>
       <div className="border h-1/2 flex">
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <div className="">room display</div>
           <button
             onClick={() => setInCombat(true)}
@@ -38,7 +38,8 @@ export default function RoomDisplay() {
           >
             Enter Shop
           </button>
-        </div>
+        </div> */}
+        {!inCombat && !exploringDungeon && <TownUi />}
 
         {inCombat && <DisplayAllMonsters />}
         {exploringDungeon && !inCombat && <RoomUi />}

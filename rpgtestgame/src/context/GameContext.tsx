@@ -30,6 +30,8 @@ type GameContextType = {
   // addToInventory: () => void;
   handleUseItem: (item: string) => void;
   handleBuyItem: (item: string) => void;
+  handleLeaveCombat: () => void;
+  handleLeaveDungeon: () => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -111,6 +113,10 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   const [inventory, setInventory] = useState<Items[]>([]);
 
+  const [previousRoomIndex, setPreviousRoomIndex] = useState<number | null>(
+    null
+  );
+
   // get a random ememy
   function getRandomEnemy(pool: Character[]): Character | null {
     if (pool.length === 0) return null;
@@ -172,6 +178,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
       if (isBossRoom) {
         addLog("👑 You defeated the boss and won the game!");
+        setInCombat(false);
+        setExploringDungeon(false);
       } else {
         // Mark room as cleared
         setMap((prevMap) => {
@@ -288,6 +296,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   const enterRoom = (index: number) => {
     console.log("map", map);
+    setPreviousRoomIndex(currentRoomIndex);
 
     const newMap = [...map];
     const room = newMap[index];
@@ -399,6 +408,40 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  const handleLeaveCombat = () => {
+    const confirmed = confirm("Are you sure you want to run and leave combat?");
+    if (!confirmed) return;
+
+    addLog("🏃‍♂️ You fled from combat!");
+
+    setCurrentEnemy(null);
+    setInCombat(false);
+    setRoomLocked(false);
+
+    if (exploringDungeon) {
+      if (previousRoomIndex !== null) {
+        setCurrentRoomIndex(previousRoomIndex);
+        addLog("🔙 You retreated to the previous room.");
+      } else {
+        addLog("⚠️ Could not retreat – no previous room found.");
+      }
+    } else {
+      addLog("🔙 You returned to the arena/town.");
+    }
+  };
+
+  const handleLeaveDungeon = () => {
+    const confirmed = confirm("Are you sure you want to leave the dungeon?");
+    if (!confirmed) return;
+
+    addLog("🚪 You have left the dungeon.");
+    setExploringDungeon(false);
+    setInCombat(false);
+    setCurrentEnemy(null);
+    setMap([]);
+    setCurrentRoomIndex(0);
+  };
+
   const resetGame = () => {
     const newPool = [...enemyPool];
     const firstEnemy = getRandomEnemy(newPool);
@@ -443,6 +486,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         // addToInventory,
         handleUseItem,
         handleBuyItem,
+        handleLeaveCombat,
+        handleLeaveDungeon,
       }}
     >
       {children}

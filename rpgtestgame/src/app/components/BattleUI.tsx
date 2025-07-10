@@ -12,6 +12,9 @@ export default function BattleUI() {
     inventory,
     // addToInventory,
     handleUseItem,
+    handleLeaveCombat,
+    handleLeaveDungeon,
+    exploringDungeon,
   } = useGame();
   // console.log("inventory", inventory);
   const [showInventory, setShowInventory] = useState(true);
@@ -42,7 +45,23 @@ export default function BattleUI() {
             >
               Attack
             </button>
+            <button
+              onClick={handleLeaveCombat}
+              className="m-2 p-2 bg-red-500 text-white rounded"
+              disabled={turn !== "player"}
+            >
+              Run
+            </button>
           </>
+        )}
+
+        {exploringDungeon && !inCombat && (
+          <button
+            onClick={handleLeaveDungeon}
+            className="m-2 p-2 bg-red-600 text-white rounded"
+          >
+            Leave Dungeon
+          </button>
         )}
 
         <button
