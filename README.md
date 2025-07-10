@@ -269,8 +269,8 @@ Project Link: [https://github.com/nelg62/RPGTestgame](https://github.com/nelg62/
 [license-url]: https://github.com/nelg62/RPGTestgame/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/glen-harding-5a1317114
-[product-screenshot]: /rpgtestgame//public/Shopanddungeon.gif
-[product-screenshot2]: /rpgtestgame//public/Shopandbattleenemys.gif
+[product-screenshot]: /rpgtestgame//public/Shopanddungeon2.gif
+[product-screenshot2]: /rpgtestgame//public/Shopandbattleenemys2.gif
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
