@@ -1,7 +1,10 @@
 import { useGame } from "@/context/GameContext";
+import { useRouter } from "next/navigation";
 
 export default function ShopUi() {
   const { handleBuyItem } = useGame();
+
+  const router = useRouter();
 
   return (
     <div className="w-full bg-sky-200">
@@ -88,7 +91,7 @@ export default function ShopUi() {
           </g> */}
 
           {/* Door to leave the shop */}
-          <g onClick={() => (window.location.href = "/game")} cursor="pointer">
+          <g onClick={() => router.push("./game")} cursor="pointer">
             <rect
               x="420"
               y="120"
