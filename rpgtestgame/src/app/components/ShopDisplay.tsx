@@ -1,6 +1,7 @@
 import { useGame } from "@/context/GameContext";
 import DisplayAllMonsters from "./DisplayAllMonsters";
 import { useRouter } from "next/navigation";
+import ShopUi from "./ShopUi";
 
 export default function ShopDisplay() {
   const { inCombat, handleBuyItem } = useGame();
@@ -30,6 +31,7 @@ export default function ShopDisplay() {
           Enter Dungeon
         </button> */}
       </div>
+      <ShopUi />
       {inCombat && <DisplayAllMonsters />}
       {/* {exploringDungeon && !inCombat && <RoomMap />} */}
     </div>
