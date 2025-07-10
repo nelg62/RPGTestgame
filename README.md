@@ -106,9 +106,9 @@ This project is a way for me to bring those ideas to life and see where my creat
 ## About The Project
 
 Dungeon Map Video
-[![Product Name Screen Shot][product-screenshot]](https://686dc7e75215c40008da630c--rpgtestgameglenharding.netlify.app/)
+[![Product Name Screen Shot][product-screenshot]](https://rpgtestgameglenharding.netlify.app/game)
 Multiple Enemy Battle Video
-[![Product Name Screen Shot][product-screenshot2]](https://686dc7e75215c40008da630c--rpgtestgameglenharding.netlify.app/)
+[![Product Name Screen Shot][product-screenshot2]](https://rpgtestgameglenharding.netlify.app/game)
 
 <h4>Features</h4>
 <ul>
@@ -180,7 +180,7 @@ This is an example of how to list things you need to use the software and how to
 
 ## Usage
 
-go to https://686dcaa97192320008d60ab0--rpgtestgameglenharding.netlify.app/game to Demo the app
+go to https://rpgtestgameglenharding.netlify.app/game to Demo the app
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
