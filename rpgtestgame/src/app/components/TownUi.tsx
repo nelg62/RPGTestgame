@@ -26,7 +26,7 @@ export default function TownUi() {
             <rect x="50" y="140" width="60" height="60" fill="#d2691e" />
             <polygon points="50,140 80,110 110,140" fill="#8b4513" />
             <text x="80" y="170" fontSize="10" textAnchor="middle" fill="#000">
-              Rest Game
+              Reset Game
             </text>
           </g>
 
