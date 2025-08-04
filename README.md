@@ -188,6 +188,7 @@ go to https://rpgtestgameglenharding.netlify.app/game to Demo the app
 
 ## Roadmap
 
+- [ ] mobile responsive
 - [ ] display screen
 - [ ] map
 - [ ] player character with stats
